@@ -33,6 +33,21 @@ function work_in_progress() {
   fi
 }
 
+# default
+function current_remote() {
+  default=$($_omz_git_git_cmd config --get gitflow.origin)
+  if ! $_omz_git_git_cmd rev-parse --is-inside-work-tree &> /dev/null; then
+    echo "$default"
+    return
+  fi
+
+  if ! $_omz_git_git_cmd remote | grep "$default" &> /dev/null; then
+    echo $($_omz_git_git_cmd remote | tail -n 1)  # random first remote
+  else
+    echo "$default"
+  fi
+}
+
 #
 # Aliases
 # (sorted alphabetically)
@@ -113,6 +128,12 @@ ggfl() {
 git push --force-with-lease origin "${b:=$1}"
 }
 compdef _git ggf=git-checkout
+
+# fetch and checkout branch
+gfc() {
+  [[ "$#" == 1 ]] && git fetch $(current_remote) "$1" && git checkout "$1"
+}
+
 
 ggl() {
   if [[ "$#" != 0 ]] && [[ "$#" != 1 ]]; then

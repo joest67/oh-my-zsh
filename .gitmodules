@@ -1,3 +1,6 @@
 [submodule "repo/zsh-syntax-highlighting"]
 	path = repo/zsh-syntax-highlighting
 	url = https://github.com/zsh-users/zsh-syntax-highlighting.git
+[submodule "repo/zsh-autosuggestions"]
+	path = repo/zsh-autosuggestions
+	url = git@github.com:zsh-users/zsh-autosuggestions.git
